@@ -1,9 +1,15 @@
 #!/bin/bash
 echo "Setup unitree ros2 environment"
-#source /opt/ros/foxy/setup.bash
-#source unitree_ros2/cyclonedds_ws/install/setup.bash
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces>
+
+if [ -d /sys/class/net/wlan0 ]; then
+  export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces>
                             <NetworkInterface name="eth0" priority="1" multicast="true" />
-			    <NetworkInterface name="wlan0" priority="2" multicast="true" />
+                            <NetworkInterface name="wlan0" priority="2" multicast="true" />
                         </Interfaces></General></Domain></CycloneDDS>'
+else
+  echo "wlan0 not found, using eth0 only"
+  export CYCLONEDDS_URI='<CycloneDDS><Domain><General><Interfaces>
+                            <NetworkInterface name="eth0" priority="1" multicast="true" />
+                        </Interfaces></General></Domain></CycloneDDS>'
+fi
