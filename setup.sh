@@ -1,5 +1,7 @@
 #!/bin/bash
 echo "Setup unitree ros2 environment"
+source /opt/ros/humble/setup.bash
+export ROS_DOMAIN_ID=0
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 if [ -d /sys/class/net/wlan0 ]; then
